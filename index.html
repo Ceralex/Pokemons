@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pokemons</title>
+  </head>
+
+  <body>
+    <nav
+      class="w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6"
+    >
+      <a href="index.html">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
+          class="w-48"
+        />
+      </a>
+      <h1 class="text-5xl font-semibold capitalize">venusaur</h1>
+
+      <a href="">
+        <div class="flex items-center justify-center gap-3 w-48">
+          <img
+            src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678"
+            class="h-16"
+          />
+          <p class="text-3xl font-bold">100</p>
+        </div>
+      </a>
+    </nav>
+
+    <main>
+      <div class="bg-[#17295b] h-screen flex items-center justify-center">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
+          class="w-4/5"
+        />
+      </div>
+
+      <div
+        id="pokemons"
+        class="grid bg-blue-950 p-5 grid-cols-7 gap-x-32 gap-y-10"
+      ></div>
+    </main>
+
+    <script type="module">
+      const url = "https://pokeapi.co/api/v2/pokemon?limit=1010&offset=0";
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const pokemon = data.results.map((result, index) => ({
+        ...result,
+        id: index + 1,
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+          index + 1
+        }.png`,
+      }));
+
+      const pokemonDiv = document.querySelector("#pokemons");
+
+      pokemon.forEach((pokemon) => {
+        const pokemonElement = document.createElement("a");
+
+        pokemonElement.href = `/pokemon.html?id=${pokemon.id}`;
+
+        pokemonElement.innerHTML = `
+                <div class="shadow-xl shadow-black p-3 flex flex-col items-center justify-center rounded gap-5 border-2 bg-yellow-500">
+                    <h1 class="text-2xl font-bold capitalize h-2">${pokemon.name}</h1>
+                    <img style="image-rendering: pixelated;" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png">
+                    <p class="text-gray-700">Id ${pokemon.id}</p>
+                </div>
+            `;
+
+        pokemonDiv.appendChild(pokemonElement);
+      });
+    </script>
+  </body>
+</html>

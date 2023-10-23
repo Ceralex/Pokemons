@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pokemon</title>
+</head>
+
+<body>
+    <nav class="w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6">
+        <a href="index.html">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
+                class="w-48" />
+        </a>
+        <h1 class="text-5xl font-semibold capitalize">venusaur</h1>
+
+        <a href="">
+            <div class="flex items-center justify-center gap-3 w-48">
+                <img src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678" class="h-16">
+                <p class="text-3xl font-bold">100</p>
+            </div>
+        </a>
+    </nav>
+
+    <main class="h-screen bg-blue-950 p-10 text-white ">
+        <div class="grid grid-cols-2 justify-evenly align-middle">
+            <div class="flex flex-col items-center">
+                <img class="w-[40rem]" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png" alt="" />
+                <div class="flex justify-center gap-5">
+                    <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
+                    <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                </div>
+            </div>
+            <div class="space-y-10">
+                <div class="bg-sky-500 rounded-md grid grid-cols-2 mt-24 w-3/4 p-5 gap-7">
+                    <div class="col-span-2">
+                        <h1 class="text-gray-200 text-2xl font-semibold">Description:</h1>
+                        <p class="text-[#215588] font-medium">The plant blooms\nwhen it is\nabsorbing solar\fenergy. It stays\non the move to\nseek sunlight.</p>
+                    </div>
+                    <div>
+                        <h1 class="text-gray-200 text-xl font-semibold">Height:</h1>
+                        <p class="text-[#215588] font-medium">2,0 m</p>
+                    </div>
+                    <div>
+                        <h1 class="text-gray-200 text-xl font-semibold">Category:</h1>
+                        <p class="text-[#215588] font-medium capitalize">seed</p>
+                    </div>
+                    <div>
+                        <h1 class="text-gray-200 text-xl font-semibold">Weight:</h1>
+                        <p class="text-[#215588] font-medium">100,0 kg</p>
+                    </div>
+                    <div>
+                        <h1 class="text-gray-200 text-xl font-semibold">Abilities:</h1>
+                        <p class="text-[#215588] font-medium capitalize">overgrow, chlorophyll</p>                        
+                    </div>
+                </div>
+                <div class="space-y-5">
+                    <h1 class="text-2xl font-semibold">Weaknesses:</h1>
+                    <div class="flex gap-5">
+                        <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
+                        <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                    </div>
+                    <div class="flex gap-5">
+                        <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
+                        <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                    </div>
+                    <div class="flex gap-5">
+                        <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
+                        <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                    </div>
+                </div>
+            </div>
+
+    </main>
+
+    <script type="module">
+        const id = new URLSearchParams(window.location.search).get('id');
+
+        const mainDiv = document.querySelector('main');
+
+        if (id === null || id === '') {
+            // Not found page
+            mainDiv.innerHTML = `
+                <h1 class="text-5xl text-white">404 Not found</h1>
+            `;
+
+            throw new Error('Pokemon ID is not provided');
+        }
+
+
+        const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Grafico con chartjs delle abilita (radar chart)
+        
+        // Cercare descrizione
+
+        // Tipi e debolezze /type/{id}/
+
+        // Evoluzioni /evolution-chain/{id}/
+
+        // Bottone per cambiare maschio/femmina/shiny
+    </script>
+</body>
+
+</html>
