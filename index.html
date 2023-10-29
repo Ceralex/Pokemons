@@ -1,80 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Pokemons</title>
-  </head>
 
-  <body>
-    <nav
-      class="w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6"
-    >
-      <a href="index.html">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
-          class="w-48"
-        />
-      </a>
-      <h1 class="text-5xl font-semibold capitalize">venusaur</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Pokemons</title>
+</head>
 
-      <a href="">
-        <div class="flex items-center justify-center gap-3 w-48">
-          <img
-            src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678"
-            class="h-16"
-          />
-          <p class="text-3xl font-bold">100</p>
-        </div>
-      </a>
-    </nav>
+<body>
+  <nav class="fixed w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6">
+    <a href="index.html">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
+        class="w-48" />
+    </a>
 
-    <main>
-      <div class="bg-[#17295b] h-screen flex items-center justify-center">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
-          class="w-4/5"
-        />
+    <a href="team.html">
+      <div class="flex items-center justify-center gap-3 w-48">
+        <img src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678" class="h-16" />
+        <p id="teamSize" class="text-3xl font-bold"></p>
       </div>
+    </a>
+  </nav>
 
-      <div
-        id="pokemons"
-        class="grid bg-blue-950 p-5 grid-cols-7 gap-x-32 gap-y-10"
-      ></div>
-    </main>
+  <main>
+    <div class="bg-[#17295b] h-screen flex items-center justify-center">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
+        class="w-4/5" />
+    </div>
 
-    <script type="module">
-      const url = "https://pokeapi.co/api/v2/pokemon?limit=1010&offset=0";
+    <div id="pokemons" class="grid bg-blue-950 p-5 grid-cols-7 gap-x-32 gap-y-10"></div>
+  </main>
 
-      const response = await fetch(url);
-      const data = await response.json();
+  <script type="module">
+    const url = "https://pokeapi.co/api/v2/pokemon?limit=1010&offset=0";
 
-      const pokemon = data.results.map((result, index) => ({
-        ...result,
-        id: index + 1,
-        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-          index + 1
-        }.png`,
-      }));
+    const response = await fetch(url);
+    const data = await response.json();
 
-      const pokemonDiv = document.querySelector("#pokemons");
+    const pokemon = data.results.map((result, index) => ({
+      ...result,
+      id: index + 1,
+      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`,
+    }));
 
-      pokemon.forEach((pokemon) => {
-        const pokemonElement = document.createElement("a");
+    const pokemonDiv = document.querySelector("#pokemons");
 
-        pokemonElement.href = `/pokemon.html?id=${pokemon.id}`;
+    pokemon.forEach((pokemon) => {
+      const pokemonContainer = document.createElement("div");
+      pokemonContainer.className = "shadow-xl shadow-black p-3 flex flex-col items-center justify-center rounded gap-5 border-2 bg-yellow-500";
 
-        pokemonElement.innerHTML = `
-                <div class="shadow-xl shadow-black p-3 flex flex-col items-center justify-center rounded gap-5 border-2 bg-yellow-500">
-                    <h1 class="text-2xl font-bold capitalize h-2">${pokemon.name}</h1>
-                    <img style="image-rendering: pixelated;" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png">
-                    <p class="text-gray-700">Id ${pokemon.id}</p>
-                </div>
-            `;
+      const pokemonName = document.createElement("h1");
+      pokemonName.className = "text-2xl font-bold capitalize h-2";
+      pokemonName.textContent = pokemon.name;
 
-        pokemonDiv.appendChild(pokemonElement);
+      const pokemonImage = document.createElement("img");
+      pokemonImage.style.imageRendering = "pixelated";
+      pokemonImage.src = pokemon.image;
+
+      const pokemonId = document.createElement("p");
+      pokemonId.className = "text-gray-700";
+      pokemonId.textContent = `Id ${pokemon.id}`;
+
+      const catchButton = document.createElement("button");
+      catchButton.className = "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      catchButton.textContent = "Catch";
+
+      catchButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        catchPokemon(pokemon);
       });
-    </script>
-  </body>
+
+      pokemonContainer.addEventListener("click", () => {
+        window.location.href = `/pokemon.html?id=${pokemon.id}`;
+      });
+
+      pokemonContainer.appendChild(pokemonName);
+      pokemonContainer.appendChild(pokemonImage);
+      pokemonContainer.appendChild(pokemonId);
+      pokemonContainer.appendChild(catchButton);
+
+      pokemonDiv.appendChild(pokemonContainer);
+    });
+
+    function catchPokemon(pokemon) {
+      team.push(pokemon);
+
+      localStorage.setItem("team", JSON.stringify(team));
+
+      teamSize.textContent = team.length;
+    }
+
+    const team = JSON.parse(localStorage.getItem("team")) || [];
+
+    const teamSize = document.querySelector("#teamSize");
+    teamSize.textContent = team.length;
+  </script>
+</body>
+
 </html>

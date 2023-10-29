@@ -5,29 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Pokemon</title>
 </head>
 
-<body>
+<body class="bg-blue-950">
     <nav class="w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6">
         <a href="index.html">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
                 class="w-48" />
         </a>
-        <h1 class="text-5xl font-semibold capitalize">venusaur</h1>
+        <h1 id="pokemonName" class="text-5xl font-semibold capitalize"></h1>
 
-        <a href="">
+        <a href="team.html">
             <div class="flex items-center justify-center gap-3 w-48">
                 <img src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678" class="h-16">
-                <p class="text-3xl font-bold">100</p>
             </div>
         </a>
     </nav>
 
-    <main class="h-screen bg-blue-950 p-10 text-white ">
+    <main class="h-screen p-10 text-white space-y-10">
         <div class="grid grid-cols-2 justify-evenly align-middle">
             <div class="flex flex-col items-center">
-                <img class="w-[40rem]" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png" alt="" />
+                <img class="w-[40rem]" id="pokemon" alt="" />
                 <div class="flex justify-center gap-5">
                     <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
                     <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
@@ -41,19 +41,19 @@
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Height:</h1>
-                        <p class="text-[#215588] font-medium">2,0 m</p>
+                        <p id="height" class="text-[#215588] font-medium"></p>
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Category:</h1>
-                        <p class="text-[#215588] font-medium capitalize">seed</p>
+                        <p id="category" class="text-[#215588] font-medium capitalize">seed</p>
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Weight:</h1>
-                        <p class="text-[#215588] font-medium">100,0 kg</p>
+                        <p id="weight" class="text-[#215588] font-medium">100,0 kg</p>
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Abilities:</h1>
-                        <p class="text-[#215588] font-medium capitalize">overgrow, chlorophyll</p>                        
+                        <p id="abilities" class="text-[#215588] font-medium capitalize">overgrow, chlorophyll</p>                        
                     </div>
                 </div>
                 <div class="space-y-5">
@@ -72,7 +72,10 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="w-1/3">
+            <canvas id="myChart"></canvas>
+        </div>
     </main>
 
     <script type="module">
@@ -95,6 +98,12 @@
         const response = await fetch(url);
         const data = await response.json();
 
+        console.log(data);
+        document.getElementById("pokemonName").innerHTML = data.name;
+        document.getElementById("pokemon").src = data.sprites.other["official-artwork"].front_default;
+        document.getElementById("height").innerHTML = `${data.height * 0.1} m`;
+        document.getElementById("weight").innerHTML = `${data.weight * 0.1} kg`;
+
         // Grafico con chartjs delle abilita (radar chart)
         
         // Cercare descrizione
@@ -104,6 +113,57 @@
         // Evoluzioni /evolution-chain/{id}/
 
         // Bottone per cambiare maschio/femmina/shiny
+    </script>
+    <script>
+        const chartData = {
+            labels: [
+                'HP',
+                'Attack',
+                'Defense',
+                'Special Attack',
+                'Special Defense',
+                'Speed'
+            ],
+            datasets: [{
+                label: 'Stats',
+                data: [65, 59, 90, 81, 56, 40],
+                fill: true,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgb(255, 99, 132)',
+                pointBackgroundColor: 'rgb(255, 99, 132)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(255, 99, 132)'
+            }]
+        };
+ 
+        const config = {
+            type: 'radar',
+            data: chartData,
+            options: {
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: false
+                            },
+                            grid: {
+                                color: 'white'
+                            },
+                            pointLabels: {
+                                color: 'white'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: Math.max([65, 59, 90, 81, 56, 40]), // Adattabile in base al pokemon                       
+                        }
+                    }
+
+            }
+        };
+
+        new Chart(
+            document.getElementById('myChart'),
+            config
+        );
     </script>
 </body>
 
