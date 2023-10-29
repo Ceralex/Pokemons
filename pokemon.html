@@ -28,13 +28,8 @@
         <div class="grid grid-cols-2 justify-evenly align-middle">
             <div class="flex flex-col items-center">
                 <img class="h-[40rem]" id="pokemon" alt="" />
-                <div class="flex justify-center gap-5">
-                    <p
-                        class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                        grass</p>
-                    <p
-                        class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                        poison</p>
+                <div id="types" class="flex justify-center gap-5">
+
                 </div>
             </div>
             <div class="space-y-10">
@@ -89,9 +84,14 @@
                 </div>
             </div>
         </div>
-        <div class="w-1/3">
-            <canvas id="myChart"></canvas>
+        <div class="flex items-center justify-evenly">
+            <div class="w-[45rem]">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div id="evolutions" class="flex">
+            </div>
         </div>
+
     </main>
 
     <script type="module">
@@ -108,8 +108,6 @@
             throw new Error('Pokemon ID is not provided');
         }
 
-
-
         const infoUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
         const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
 
@@ -122,7 +120,6 @@
         const infoData = await infoResponse.json();
         const speciesData = await speciesResponse.json();
 
-        // Update the DOM with the fetched data
         document.getElementById("pokemonName").innerText = infoData.name;
 
         document.getElementById("pokemon").src = infoData.sprites.other["official-artwork"].front_default;
@@ -134,19 +131,17 @@
         document.getElementById("category").innerText = speciesData.genera.find((item) => item.language.name === "en").genus;
 
         try { // A volte non hanno una descrizione
-            document.getElementById("description").innerText = speciesData.flavor_text_entries.find((item) => item.language.name === "en").flavor_text;
+            document.getElementById("description").innerHTML = speciesData.flavor_text_entries.find((item) => item.language.name === "en").flavor_text;
         } catch (error) {
             console.error(error);
         }
-        displayGraph(infoData.stats)
 
-        // Tipi e debolezze /type/{id}/
         const typesColors = {
             "normal": "#a4acaf",
             "fighting": "#d56723",
-            "flying": "TODO",
+            "flying": "#ffffff",
             "poison": "#b97fc9",
-            "ground": "TODO",
+            "ground": "#78350f",
             "rock": "#a38c21",
             "bug": "#729f3f",
             "ghost": "#7b62a3",
@@ -157,15 +152,60 @@
             "electric": "#eed535",
             "psychic": "#f366b9",
             "ice": "#51c4e7",
-            "dragon": "TODO",
+            "dragon": "#991b1b",
             "dark": "#707070",
             "fairy": "#fdb9e9",
         }
-        // Evoluzioni /evolution-chain/{id}/
 
-        // Bottone per cambiare maschio/femmina/shiny
-    </script>
-    <script>
+        infoData.types.forEach(({ type }) => {
+            const typeElement = document.createElement("p");
+            typeElement.className = `text-2xl bg-[${typesColors[type.name]}] text-black capitalize w-72 h-10 text-center font-semibold rounded-md`;
+            typeElement.innerText = type.name;
+            document.getElementById("types").appendChild(typeElement);
+        });
+
+        displayGraph(infoData.stats);
+
+        const evolutionUrl = speciesData.evolution_chain.url;
+
+        const evolutionResponse = await fetch(evolutionUrl);
+        const evolutionData = await evolutionResponse.json();
+
+        let evolutionChain = evolutionData.chain;
+
+        const evolutions = [];
+
+        while (evolutionChain !== undefined) {
+            const pokemonId = evolutionChain.species.url.split("/")[6];
+
+            evolutions.push({
+                "name": evolutionChain.species.name,
+                "id": pokemonId,
+                "image": `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`,
+            });
+
+            evolutionChain = evolutionChain.evolves_to[0];
+        }
+
+        const evolutionContainer = document.getElementById("evolutions");
+
+        evolutions.forEach(ev => {
+            const evolutionDiv = document.createElement("div");
+
+            evolutionDiv.className = "flex flex-col items-center ";
+            evolutionDiv.addEventListener("click", () => {
+                window.location.href = `/pokemon.html?id=${ev.id}`;
+            });
+
+            evolutionDiv.innerHTML = `
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ev.id}.png"
+                    class="w-64" style="image-rendering: pixelated;" />
+                <h1 class="text-xl capitalize">${ev.name}</h1>
+                <p class="text-gray-400">Id: ${ev.id}</p>`;
+
+            evolutionContainer.appendChild(evolutionDiv);
+        })
+
         function displayGraph(stats) {
             const baseStats = stats.map(stat => stat.base_stat);
 
@@ -219,6 +259,7 @@
                 config
             );
         }
+        // Bottone per cambiare maschio/femmina/shiny
     </script>
 </body>
 
