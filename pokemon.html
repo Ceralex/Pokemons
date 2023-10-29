@@ -27,17 +27,21 @@
     <main class="h-screen p-10 text-white space-y-10">
         <div class="grid grid-cols-2 justify-evenly align-middle">
             <div class="flex flex-col items-center">
-                <img class="w-[40rem]" id="pokemon" alt="" />
+                <img class="h-[40rem]" id="pokemon" alt="" />
                 <div class="flex justify-center gap-5">
-                    <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
-                    <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                    <p
+                        class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                        grass</p>
+                    <p
+                        class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                        poison</p>
                 </div>
             </div>
             <div class="space-y-10">
                 <div class="bg-sky-500 rounded-md grid grid-cols-2 mt-24 w-3/4 p-5 gap-7">
                     <div class="col-span-2">
                         <h1 class="text-gray-200 text-2xl font-semibold">Description:</h1>
-                        <p class="text-[#215588] font-medium">The plant blooms\nwhen it is\nabsorbing solar\fenergy. It stays\non the move to\nseek sunlight.</p>
+                        <p id="description" class="text-[#215588] font-medium"></p>
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Height:</h1>
@@ -45,30 +49,42 @@
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Category:</h1>
-                        <p id="category" class="text-[#215588] font-medium capitalize">seed</p>
+                        <p id="category" class="text-[#215588] font-medium capitalize"></p>
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Weight:</h1>
-                        <p id="weight" class="text-[#215588] font-medium">100,0 kg</p>
+                        <p id="weight" class="text-[#215588] font-medium"></p>
                     </div>
                     <div>
                         <h1 class="text-gray-200 text-xl font-semibold">Abilities:</h1>
-                        <p id="abilities" class="text-[#215588] font-medium capitalize">overgrow, chlorophyll</p>                        
+                        <p id="abilities" class="text-[#215588] font-medium capitalize"></p>
                     </div>
                 </div>
                 <div class="space-y-5">
                     <h1 class="text-2xl font-semibold">Weaknesses:</h1>
                     <div class="flex gap-5">
-                        <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
-                        <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                        <p
+                            class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                            grass</p>
+                        <p
+                            class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                            poison</p>
                     </div>
                     <div class="flex gap-5">
-                        <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
-                        <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                        <p
+                            class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                            grass</p>
+                        <p
+                            class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                            poison</p>
                     </div>
                     <div class="flex gap-5">
-                        <p class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">grass</p>
-                        <p class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">poison</p>
+                        <p
+                            class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                            grass</p>
+                        <p
+                            class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
+                            poison</p>
                     </div>
                 </div>
             </div>
@@ -93,54 +109,92 @@
         }
 
 
-        const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
 
-        const response = await fetch(url);
-        const data = await response.json();
+        const infoUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
+        const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
 
-        console.log(data);
-        document.getElementById("pokemonName").innerHTML = data.name;
-        document.getElementById("pokemon").src = data.sprites.other["official-artwork"].front_default;
-        document.getElementById("height").innerHTML = `${data.height * 0.1} m`;
-        document.getElementById("weight").innerHTML = `${data.weight * 0.1} kg`;
+        const [infoResponse, speciesResponse] = await Promise.all([
+            fetch(infoUrl),
+            fetch(speciesUrl),
+        ]);
 
-        // Grafico con chartjs delle abilita (radar chart)
-        
-        // Cercare descrizione
+
+        const infoData = await infoResponse.json();
+        const speciesData = await speciesResponse.json();
+
+        // Update the DOM with the fetched data
+        document.getElementById("pokemonName").innerText = infoData.name;
+
+        document.getElementById("pokemon").src = infoData.sprites.other["official-artwork"].front_default;
+
+        document.getElementById("height").innerText = `${infoData.height / 10} m`;
+        document.getElementById("weight").innerText = `${infoData.weight / 10} kg`;
+
+        document.getElementById("abilities").innerText = infoData.abilities.map((ability) => ability.ability.name).join(", ");
+        document.getElementById("category").innerText = speciesData.genera.find((item) => item.language.name === "en").genus;
+
+        try { // A volte non hanno una descrizione
+            document.getElementById("description").innerText = speciesData.flavor_text_entries.find((item) => item.language.name === "en").flavor_text;
+        } catch (error) {
+            console.error(error);
+        }
+        displayGraph(infoData.stats)
 
         // Tipi e debolezze /type/{id}/
-
+        const typesColors = {
+            "normal": "#a4acaf",
+            "fighting": "#d56723",
+            "flying": "TODO",
+            "poison": "#b97fc9",
+            "ground": "TODO",
+            "rock": "#a38c21",
+            "bug": "#729f3f",
+            "ghost": "#7b62a3",
+            "steel": "#9eb7b8",
+            "fire": "#fd7d24",
+            "water": "#4592c4",
+            "grass": "#9bcc50",
+            "electric": "#eed535",
+            "psychic": "#f366b9",
+            "ice": "#51c4e7",
+            "dragon": "TODO",
+            "dark": "#707070",
+            "fairy": "#fdb9e9",
+        }
         // Evoluzioni /evolution-chain/{id}/
 
         // Bottone per cambiare maschio/femmina/shiny
     </script>
     <script>
-        const chartData = {
-            labels: [
-                'HP',
-                'Attack',
-                'Defense',
-                'Special Attack',
-                'Special Defense',
-                'Speed'
-            ],
-            datasets: [{
-                label: 'Stats',
-                data: [65, 59, 90, 81, 56, 40],
-                fill: true,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgb(255, 99, 132)',
-                pointBackgroundColor: 'rgb(255, 99, 132)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(255, 99, 132)'
-            }]
-        };
- 
-        const config = {
-            type: 'radar',
-            data: chartData,
-            options: {
+        function displayGraph(stats) {
+            const baseStats = stats.map(stat => stat.base_stat);
+
+            const chartData = {
+                labels: [
+                    'HP',
+                    'Attack',
+                    'Defense',
+                    'Special Attack',
+                    'Special Defense',
+                    'Speed'
+                ],
+                datasets: [{
+                    label: 'Stats',
+                    data: baseStats,
+                    fill: true,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    pointBackgroundColor: 'rgb(255, 99, 132)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(255, 99, 132)'
+                }]
+            };
+
+            const config = {
+                type: 'radar',
+                data: chartData,
+                options: {
                     scales: {
                         r: {
                             angleLines: {
@@ -153,17 +207,18 @@
                                 color: 'white'
                             },
                             suggestedMin: 0,
-                            suggestedMax: Math.max([65, 59, 90, 81, 56, 40]), // Adattabile in base al pokemon                       
+                            suggestedMax: Math.max(baseStats), // Adattabile in base al pokemon                       
                         }
                     }
 
-            }
-        };
+                }
+            };
 
-        new Chart(
-            document.getElementById('myChart'),
-            config
-        );
+            new Chart(
+                document.getElementById('myChart'),
+                config
+            );
+        }
     </script>
 </body>
 
