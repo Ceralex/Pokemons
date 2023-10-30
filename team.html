@@ -17,12 +17,10 @@
     </nav>
 
     <main>
-        <pre id="json" class="text-white">
-        </pre>
+        <div id="pokemons" class="grid bg-blue-950 p-10 grid-cols-6 gap-x-32 gap-y-14"></div>
     </main>
+
+    <script type="module" src="src/team.js" />
 </body>
-<script>
-    document.getElementById("json").innerHTML = JSON.stringify(JSON.parse(localStorage.getItem("team")), null, 2);
-</script>
 
 </html>

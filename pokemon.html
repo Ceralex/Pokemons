@@ -2,265 +2,73 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Pokemon</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Pokemon</title>
 </head>
 
 <body class="bg-blue-950">
-    <nav class="w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6">
-        <a href="index.html">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
-                class="w-48" />
-        </a>
-        <h1 id="pokemonName" class="text-5xl font-semibold capitalize"></h1>
+  <nav class="w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6">
+    <a href="index.html">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
+        class="w-48" />
+    </a>
+    <h1 id="pokemonName" class="text-5xl font-semibold capitalize"></h1>
 
-        <a href="team.html">
-            <div class="flex items-center justify-center gap-3 w-48">
-                <img src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678" class="h-16">
-            </div>
-        </a>
-    </nav>
+    <a href="team.html">
+      <div class="flex items-center justify-center gap-3 w-48">
+        <img src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678" class="h-16" />
+      </div>
+    </a>
+  </nav>
 
-    <main class="h-screen p-10 text-white space-y-10">
-        <div class="grid grid-cols-2 justify-evenly align-middle">
-            <div class="flex flex-col items-center">
-                <img class="h-[40rem]" id="pokemon" alt="" />
-                <div id="types" class="flex justify-center gap-5">
-
-                </div>
-            </div>
-            <div class="space-y-10">
-                <div class="bg-sky-500 rounded-md grid grid-cols-2 mt-24 w-3/4 p-5 gap-7">
-                    <div class="col-span-2">
-                        <h1 class="text-gray-200 text-2xl font-semibold">Description:</h1>
-                        <p id="description" class="text-[#215588] font-medium"></p>
-                    </div>
-                    <div>
-                        <h1 class="text-gray-200 text-xl font-semibold">Height:</h1>
-                        <p id="height" class="text-[#215588] font-medium"></p>
-                    </div>
-                    <div>
-                        <h1 class="text-gray-200 text-xl font-semibold">Category:</h1>
-                        <p id="category" class="text-[#215588] font-medium capitalize"></p>
-                    </div>
-                    <div>
-                        <h1 class="text-gray-200 text-xl font-semibold">Weight:</h1>
-                        <p id="weight" class="text-[#215588] font-medium"></p>
-                    </div>
-                    <div>
-                        <h1 class="text-gray-200 text-xl font-semibold">Abilities:</h1>
-                        <p id="abilities" class="text-[#215588] font-medium capitalize"></p>
-                    </div>
-                </div>
-                <div class="space-y-5">
-                    <h1 class="text-2xl font-semibold">Weaknesses:</h1>
-                    <div class="flex gap-5">
-                        <p
-                            class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                            grass</p>
-                        <p
-                            class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                            poison</p>
-                    </div>
-                    <div class="flex gap-5">
-                        <p
-                            class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                            grass</p>
-                        <p
-                            class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                            poison</p>
-                    </div>
-                    <div class="flex gap-5">
-                        <p
-                            class="text-2xl bg-green-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                            grass</p>
-                        <p
-                            class="text-2xl bg-purple-400 text-black capitalize w-72 h-10 text-center font-semibold rounded-md">
-                            poison</p>
-                    </div>
-                </div>
-            </div>
+  <main class="h-screen p-10 text-white space-y-20">
+    <div class="grid grid-cols-2 justify-evenly align-middle">
+      <div class="flex flex-col items-center">
+        <img class="h-[40rem]" id="pokemon" alt="" />
+        <div id="types" class="flex justify-center gap-5"></div>
+      </div>
+      <div class="space-y-10">
+        <div class="bg-sky-500 rounded-md grid grid-cols-2 mt-24 w-3/4 p-5 gap-7">
+          <div class="col-span-2">
+            <h1 class="text-gray-200 text-2xl font-semibold">Description:</h1>
+            <p id="description" class="text-[#215588] font-medium"></p>
+          </div>
+          <div>
+            <h1 class="text-gray-200 text-xl font-semibold">Height:</h1>
+            <p id="height" class="text-[#215588] font-medium"></p>
+          </div>
+          <div>
+            <h1 class="text-gray-200 text-xl font-semibold">Category:</h1>
+            <p id="category" class="text-[#215588] font-medium capitalize"></p>
+          </div>
+          <div>
+            <h1 class="text-gray-200 text-xl font-semibold">Weight:</h1>
+            <p id="weight" class="text-[#215588] font-medium"></p>
+          </div>
+          <div>
+            <h1 class="text-gray-200 text-xl font-semibold">Abilities:</h1>
+            <p id="abilities" class="text-[#215588] font-medium capitalize"></p>
+          </div>
         </div>
-        <div class="flex items-center justify-evenly">
-            <div class="w-[45rem]">
-                <canvas id="myChart"></canvas>
-            </div>
-            <div id="evolutions" class="flex">
-            </div>
+        <div id="weaknesses" class="space-y-5">
+          <h1 class="text-2xl font-semibold">Weaknesses:</h1>
         </div>
+      </div>
+    </div>
+    <div class="flex items-center justify-evenly">
+      <div class="w-[45rem]">
+        <canvas id="myChart"></canvas>
+      </div>
+      <div id="evolutions" class="flex w-[45rem]"></div>
+    </div>
+  </main>
 
-    </main>
+  <script type="module" src="src/pokemon.js" />
 
-    <script type="module">
-        const id = new URLSearchParams(window.location.search).get('id');
-
-        const mainDiv = document.querySelector('main');
-
-        if (id === null || id === '') {
-            // Not found page
-            mainDiv.innerHTML = `
-                <h1 class="text-5xl text-white">404 Not found</h1>
-            `;
-
-            throw new Error('Pokemon ID is not provided');
-        }
-
-        const infoUrl = `https://pokeapi.co/api/v2/pokemon/${id}`;
-        const speciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${id}`;
-
-        const [infoResponse, speciesResponse] = await Promise.all([
-            fetch(infoUrl),
-            fetch(speciesUrl),
-        ]);
-
-
-        const infoData = await infoResponse.json();
-        const speciesData = await speciesResponse.json();
-
-        document.getElementById("pokemonName").innerText = infoData.name;
-
-        document.getElementById("pokemon").src = infoData.sprites.other["official-artwork"].front_default;
-
-        document.getElementById("height").innerText = `${infoData.height / 10} m`;
-        document.getElementById("weight").innerText = `${infoData.weight / 10} kg`;
-
-        document.getElementById("abilities").innerText = infoData.abilities.map((ability) => ability.ability.name).join(", ");
-        document.getElementById("category").innerText = speciesData.genera.find((item) => item.language.name === "en").genus;
-
-        try { // A volte non hanno una descrizione
-            document.getElementById("description").innerHTML = speciesData.flavor_text_entries.find((item) => item.language.name === "en").flavor_text;
-        } catch (error) {
-            console.error(error);
-        }
-
-        const typesColors = {
-            "normal": "#a4acaf",
-            "fighting": "#d56723",
-            "flying": "#ffffff",
-            "poison": "#b97fc9",
-            "ground": "#78350f",
-            "rock": "#a38c21",
-            "bug": "#729f3f",
-            "ghost": "#7b62a3",
-            "steel": "#9eb7b8",
-            "fire": "#fd7d24",
-            "water": "#4592c4",
-            "grass": "#9bcc50",
-            "electric": "#eed535",
-            "psychic": "#f366b9",
-            "ice": "#51c4e7",
-            "dragon": "#991b1b",
-            "dark": "#707070",
-            "fairy": "#fdb9e9",
-        }
-
-        infoData.types.forEach(({ type }) => {
-            const typeElement = document.createElement("p");
-            typeElement.className = `text-2xl bg-[${typesColors[type.name]}] text-black capitalize w-72 h-10 text-center font-semibold rounded-md`;
-            typeElement.innerText = type.name;
-            document.getElementById("types").appendChild(typeElement);
-        });
-
-        displayGraph(infoData.stats);
-
-        const evolutionUrl = speciesData.evolution_chain.url;
-
-        const evolutionResponse = await fetch(evolutionUrl);
-        const evolutionData = await evolutionResponse.json();
-
-        let evolutionChain = evolutionData.chain;
-
-        const evolutions = [];
-
-        while (evolutionChain !== undefined) {
-            const pokemonId = evolutionChain.species.url.split("/")[6];
-
-            evolutions.push({
-                "name": evolutionChain.species.name,
-                "id": pokemonId,
-                "image": `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`,
-            });
-
-            evolutionChain = evolutionChain.evolves_to[0];
-        }
-
-        const evolutionContainer = document.getElementById("evolutions");
-
-        evolutions.forEach(ev => {
-            const evolutionDiv = document.createElement("div");
-
-            evolutionDiv.className = "flex flex-col items-center ";
-            evolutionDiv.addEventListener("click", () => {
-                window.location.href = `/pokemon.html?id=${ev.id}`;
-            });
-
-            evolutionDiv.innerHTML = `
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ev.id}.png"
-                    class="w-64" style="image-rendering: pixelated;" />
-                <h1 class="text-xl capitalize">${ev.name}</h1>
-                <p class="text-gray-400">Id: ${ev.id}</p>`;
-
-            evolutionContainer.appendChild(evolutionDiv);
-        })
-
-        function displayGraph(stats) {
-            const baseStats = stats.map(stat => stat.base_stat);
-
-            const chartData = {
-                labels: [
-                    'HP',
-                    'Attack',
-                    'Defense',
-                    'Special Attack',
-                    'Special Defense',
-                    'Speed'
-                ],
-                datasets: [{
-                    label: 'Stats',
-                    data: baseStats,
-                    fill: true,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(255, 99, 132)'
-                }]
-            };
-
-            const config = {
-                type: 'radar',
-                data: chartData,
-                options: {
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: false
-                            },
-                            grid: {
-                                color: 'white'
-                            },
-                            pointLabels: {
-                                color: 'white'
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: Math.max(baseStats), // Adattabile in base al pokemon                       
-                        }
-                    }
-
-                }
-            };
-
-            new Chart(
-                document.getElementById('myChart'),
-                config
-            );
-        }
-        // Bottone per cambiare maschio/femmina/shiny
-    </script>
 </body>
 
 </html>
