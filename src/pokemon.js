@@ -100,7 +100,7 @@ async function displayPokemonInfo(infoData, speciesData, evolutions) {
 
 		evolutionDiv.innerHTML = `
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ev.id}.png"
-                    class="w-64" style="image-rendering: pixelated;" />
+                    class="w-64" style="image-rendering: pixelated;" alt="${ev.name}" />
                 <h1 class="text-xl capitalize">${ev.name}</h1>
                 <p class="text-gray-400">Id: ${ev.id}</p>`;
 

@@ -31,6 +31,7 @@ function displayPokemons(pokemons) {
 		pokemonImage.className = "h-48 w-48 aspect-square";
 		pokemonImage.style.imageRendering = "pixelated";
 		pokemonImage.src = pokemon.image;
+		pokemonImage.alt = pokemon.name;
 
 		const pokemonName = document.createElement("h1");
 		pokemonName.className = "text-2xl font-bold capitalize text-blue-950";
