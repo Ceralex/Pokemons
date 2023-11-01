@@ -1,7 +1,13 @@
 const pokemonDiv = document.querySelector("#pokemons");
-console.log("Ciaoooo");
+
 const pokemons = JSON.parse(localStorage.getItem("team")) || [];
-console.log(pokemons);
+
+if (pokemons.length === 0) {
+	document.querySelector("main").innerHTML = `
+		<h1 class="text-2xl font-bold text-center text-white w-screen p-10"> Your team is empty </h1>
+	`;
+}
+
 pokemons.forEach(pokemon => {
 	const pokemonContainer = document.createElement("div");
 	pokemonContainer.className =
