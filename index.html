@@ -9,15 +9,21 @@
 </head>
 
 <body>
-  <nav class="fixed w-full bg-[#2c6eb2] h-24 text-white flex justify-between items-center px-6">
+  <nav class="fixed w-full bg-[#2c6eb2] h-24 flex justify-between items-center px-6">
     <a href="index.html">
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png"
         class="w-48" />
     </a>
 
+    <form id="searchForm" class="flex items-center w-1/4">
+      <input type="text" id="searchInput" placeholder="Search Pokemon..."
+        class="bg-transparent text-white w-full border-none outline-none" />
+      <button type="submit" class="ml-3">Search</button>
+    </form>
+
     <a href="team.html">
-      <div class="flex items-center justify-center gap-3 w-48">
+      <div class="flex items-center justify-center gap-3 w-48 text-white">
         <img src="https://pngimg.com/d/pokeball_PNG29.png?width=678&height=678" class="h-16" />
         <p id="teamSize" class="text-3xl font-bold"></p>
       </div>

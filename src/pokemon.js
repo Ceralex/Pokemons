@@ -143,7 +143,7 @@ async function displayWeaknesses(doubleDamage, halfDamage, noDamage) {
 const id = new URLSearchParams(window.location.search).get("id");
 const mainDiv = document.querySelector("main");
 
-if (id === null || id === "") {
+if (!id || id > 1010) {
 	// Not found page
 	mainDiv.innerHTML = `
             <h1 class="text-5xl text-white">404 Not found</h1>
