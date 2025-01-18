@@ -6,3 +6,8 @@ Additional features are:
 - Graph of the Pokemon attributes with [GraphJS](https://www.chartjs.org).
 
 Pokemons data is fetched from [Pokeapi](https://pokeapi.co/).
+
+![image](https://github.com/user-attachments/assets/ff1ee90c-0cbd-4f71-a0da-0cb4a2db69a5)
+![image](https://github.com/user-attachments/assets/bcb9ff2c-2a49-47eb-8abc-501d400d0973)
+![image](https://github.com/user-attachments/assets/4ef26c00-efd0-459a-845a-9ee05335781a)
+
